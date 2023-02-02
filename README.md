@@ -1,4 +1,4 @@
-Block Users
+Block Users (WORK IN PROGRESS)
 ===========
 
 For OJS/OMP 3.3.0
