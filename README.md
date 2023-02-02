@@ -3,7 +3,12 @@ Block Users (WORK IN PROGRESS)
 
 For OJS/OMP 3.3.0
 
-The plugin allows to upload a file with a list of mails of users to be disabled.
+The plugin reads a file with a list of mails of users to be disabled.
+This is a CLI plugin, so it need to be called from the command-line as follows:
+
+```
+$ php BlockUsersPlugin.inc.php path/to/listOfMails.txt
+```
 
 It's usefull to block mailings and logins in journals that have a lot of spam users.
 Once disabled, after a certain time, if nobody complains, users could be merged/removed.

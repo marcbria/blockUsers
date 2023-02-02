@@ -15,7 +15,7 @@ msgid "plugins.importexport.blockUsers.name"
 msgstr "Block Users Plugin"
 
 msgid "plugins.importexport.blockUsers.description"
-msgstr "A plugin to disable all the users whose mail is listed in the upload file."
+msgstr "A plugin to disable all the users whose mail is listed in the file specified."
 
 msgid "plugins.importexport.blockUsers.id"
 msgstr "ID"

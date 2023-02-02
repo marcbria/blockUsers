@@ -12,7 +12,7 @@
 <version>
 	<application>blockUsers</application>
 	<type>plugins.importexport</type>
-	<release>0.1.1.1</release>
+	<release>0.1.2.0</release>
 	<date>2023-02-02</date>
 	<lazy-load>1</lazy-load>
 	<class>BlockUsersPlugin</class>
