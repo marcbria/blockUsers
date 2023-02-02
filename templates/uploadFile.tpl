@@ -31,8 +31,8 @@
 			</tbody>
 		</table>
 
-		<form method="POST" action="{plugin_url path="exportAll"}">
-			<button class="pkp_button" type="submit">{translate key="plugins.importexport.blockUsers.exportAll"}</button>
+		<form method="POST" action="{plugin_url path="uploadFile"}">
+			<button class="pkp_button" type="submit">{translate key="plugins.importexport.blockUsers.uploadFile"}</button>
 		</form>
 	</div>
 {/block}

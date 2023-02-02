@@ -56,7 +56,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 		$path = array_shift($args);
 		switch ($path) {
 			// Stream a CSV file for download
-			case 'exportAll':
+			case 'uploadFile':
 				header('content-type: text/comma-separated-values');
 				header('content-disposition: attachment; filename=articles-' . date('Ymd') . '.csv');
 				$publications = $this->getAll($contextId);
@@ -64,14 +64,14 @@ class BlockUsersPlugin extends ImportExportPlugin {
 				break;
 
 			// When no path is requested, display a list of publications
-			// to export and a button to run the `exportAll` path.
+			// to export and a button to run the `uploadFile` path.
 			default:
 				$templateMgr = TemplateManager::getManager($request);
 				$templateMgr->assign([
 					'pageTitle' => __('plugins.importexport.blockUsers.name'),
 					'publications' => $this->getAll($contextId),
 				]);
-				$templateMgr->display($this->getTemplateResource('export.tpl'));
+				$templateMgr->display($this->getTemplateResource('uploadFile.tpl'));
 		}
 	}
 
