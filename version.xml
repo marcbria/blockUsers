@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE version SYSTEM "../../../lib/pkp/dtd/pluginVersion.dtd">
+<!--
+ * version.xml
+ *
+ * Copyright (c) 2023 Marc Bria (Universitat Autònoma de Barcelona)
+ * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+ *
+ * Plugin version information.
+-->
+
 <version>
 	<application>blockUsers</application>
-	<type>plugins.generic</type>
-	<release>0.1.0.0</release>
+	<type>plugins.importexport</type>
+	<release>0.1.1.1</release>
 	<date>2023-02-02</date>
 	<lazy-load>1</lazy-load>
 	<class>BlockUsersPlugin</class>

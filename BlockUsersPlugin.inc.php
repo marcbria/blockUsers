@@ -1,48 +1,131 @@
 <?php
 /**
- * @file plugins/generic/blockUsers/BlockUsersPlugin.inc.php
+ * @file BlockUsersPlugin.inc.php
  *
- * Copyright (c) 2023 Marc Bria Ramírez (Universitat Autònoma de Barcelona)
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ * Copyright (c) 2023 Marc Bria (Universitat Autònoma de Barcelona)
+ * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class BlockUsersPlugin
- * @ingroup plugins_generic_blockUsers
- *
- * @brief Block Users plugin class
+ * @brief An example plugin demonstrating how to write an import/export plugin.
  */
 
-import('lib.pkp.classes.plugins.GenericPlugin');
+import('lib.pkp.classes.plugins.ImportExportPlugin');
 
-class BlockUsersPlugin extends GenericPlugin {
+class BlockUsersPlugin extends ImportExportPlugin {
+	/**
+	 * @copydoc ImportExportPlugin::register()
+	 */
 	public function register($category, $path, $mainContextId = NULL) {
-
-		// Register the plugin even when it is not enabled
 		$success = parent::register($category, $path);
-
-		if ($success && $this->getEnabled()) {
-			// Do something when the plugin is enabled
-		}
-
+		$this->addLocaleData();
 		return $success;
 	}
 
 	/**
-	 * Provide a name for this plugin
-	 *
-	 * The name will appear in the Plugin Gallery where editors can
-	 * install, enable and disable plugins.
+	 * @copydoc ImportExportPlugin::getName()
 	 */
-	public function getDisplayName() {
-		return 'Block Users';
+	public function getName() {
+		return 'BlockUsersPlugin';
 	}
 
 	/**
-	 * Provide a description for this plugin
-	 *
-	 * The description will appear in the Plugin Gallery where editors can
-	 * install, enable and disable plugins.
+	 * @copydoc ImportExportPlugin::getDisplayName()
+	 */
+	public function getDisplayName() {
+		return __('plugins.importexport.blockUsers.name');
+	}
+
+	/**
+	 * @copydoc ImportExportPlugin::getDescription()
 	 */
 	public function getDescription() {
-		return 'This plugin disables the users whose mail is listed in the uploaded document.';
+		return __('plugins.importexport.blockUsers.description');
+	}
+
+	/**
+	 * @copydoc ImportExportPlugin::register()
+	 */
+	public function display($args, $request) {
+		parent::display($args, $request);
+
+		// Get the journal or press id
+		$contextId = Application::get()->getRequest()->getContext()->getId();
+
+		// Use the path to determine which action
+		// should be taken.
+		$path = array_shift($args);
+		switch ($path) {
+			// Stream a CSV file for download
+			case 'exportAll':
+				header('content-type: text/comma-separated-values');
+				header('content-disposition: attachment; filename=articles-' . date('Ymd') . '.csv');
+				$publications = $this->getAll($contextId);
+				$this->export($publications, 'php://output');
+				break;
+
+			// When no path is requested, display a list of publications
+			// to export and a button to run the `exportAll` path.
+			default:
+				$templateMgr = TemplateManager::getManager($request);
+				$templateMgr->assign([
+					'pageTitle' => __('plugins.importexport.blockUsers.name'),
+					'publications' => $this->getAll($contextId),
+				]);
+				$templateMgr->display($this->getTemplateResource('export.tpl'));
+		}
+	}
+
+	/**
+	 * @copydoc ImportExportPlugin::executeCLI()
+	 */
+	public function executeCLI($scriptName, &$args) {
+		$csvFile = array_shift($args);
+		$contextId = array_shift($args);
+
+		if (!$csvFile || !$contextId) {
+			$this->usage('');
+		}
+
+		$result = $this->getAll($contextId);
+		$this->export($result, $csvFile);
+	}
+
+	/**
+	 * @copydoc ImportExportPlugin::usage()
+	 */
+	public function usage($scriptName) {
+		echo __('plugins.importexport.blockUsers.cliUsage', array(
+			'scriptName' => $scriptName,
+			'pluginName' => $this->getName()
+		)) . "\n";
+	}
+
+	/**
+	 * A helper method to get all publications for export
+	 *
+	 * @param	int	$contextId Which journal or press to get submissions for
+	 * @return DAOResultIterator
+	 */
+	public function getAll($contextId) {
+		import('classes.submission.Submission');
+		return Services::get('submission')->getMany([
+			'contextId' => $contextId,
+			'status' => STATUS_PUBLISHED,
+		]);
+	}
+
+	/**
+	 * A helper method to stream all publications to a CSV file
+	 *
+	 * @param DAOResultIterator $publications Iterator with publication data
+	 * @param string $filename CSV filename
+	 */
+	public function export($publicationIterator, $filename) {
+		$fp = fopen($filename, 'wt');
+		fputcsv($fp, ['ID', 'Title']);
+		foreach ($publicationIterator as $publication) {
+			fputcsv($fp, [$publication->getId(), $publication->getLocalizedTitle()]);
+		}
+		fclose($fp);
 	}
 }
