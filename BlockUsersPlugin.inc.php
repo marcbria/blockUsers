@@ -11,6 +11,7 @@
 
 import('lib.pkp.classes.plugins.ImportExportPlugin');
 
+
 class BlockUsersPlugin extends ImportExportPlugin {
 	/**
 	 * @copydoc ImportExportPlugin::register()
@@ -78,40 +79,71 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	/**
 	 * @copydoc ImportExportPlugin::executeCLI()
 	 */
-	/*public function executeCLI($scriptName, &$args) {
-		$csvFile = array_shift($args);
-		$contextId = array_shift($args);
-
-		if (!$csvFile || !$contextId) {
-			$this->usage('');
-		}
-
-		$result = $this->getAll($contextId);
-		$this->export($result, $csvFile);
-	}*/
-
-	/**
-	 * @copydoc ImportExportPlugin::executeCLI()
-	 */
 	public function executeCLI($scriptName, &$args) {
-
-		$this->usage($scriptName);
-		echo "====================="
 
 		// Use the path to determine which action should be taken.
 		$action = array_shift($args);
 
 		switch ($action) {
-			// Stream a CSV file for download
-			case 'usage':
-				$this->usage($scriptName);
+
 			case 'disable':
+
 				$filename = array_shift($args);
-				//$this->usage($scriptName);
 		
-				echo "Filename with users to disable: $filename";
-				// $data = file_get_contents($filename);
-				// return $data;
+				// Check if the file exists
+				if (!file_exists($filename)) {
+					echo "ERROR: File [./$filename] not found\n";
+					echo "Check if file exist and is readable.\n";
+					return;
+				}
+
+
+				// Check the file parameter
+				if ($filename) {
+					echo "> Filename with users to disable: $filename \n";
+
+					// Get the uploaded file
+      					// file_put_contents($filename, $file['bits']);
+
+					// Read the file and get the list of emails
+					$emailList = file($filename);
+					foreach ($emailList as $email) {
+						// Remove any leading/trailing whitespaces
+						$email = trim($email);
+						// Get the user with the specified email
+						$userDao = DAORegistry::getDAO('UserDAO');
+
+						// Get the user with the specified email
+						//if (version_compare(VERSION, '3.3.0.0', '<')) {
+						//    $user = $userDao->getByEmail($email);
+						//} else {
+						    $user = $userDao->getUserByEmail($email);
+						//}
+
+					        if ($user) {
+							echo "Disabled: $email [ " . $user->getUsername() . " ] \n";
+
+							$user->setDisabled(true);
+							$userDao->updateObject($user);
+						}
+						else {
+							echo "Ignored: $email [ Not found ]\n";
+						}
+					}
+				}
+				else {
+					echo "File not found\n";
+				}
+			break;
+
+                        // Plugin usage
+                        case 'usage':
+			default:
+
+                                echo "OJS version: $version\n";
+                                $this->usage($scriptName);
+                                break;
+
 		}
 	}
 
@@ -123,20 +155,4 @@ class BlockUsersPlugin extends ImportExportPlugin {
 		echo "Usage: " . $scriptName . " " . $this->getName() . " disable [filename]\n";
 	}
 
-
-
-	/**
-	 * A helper method to stream all publications to a CSV file
-	 *
-	 * @param DAOResultIterator $publications Iterator with publication data
-	 * @param string $filename CSV filename
-	 */
-	/*public function export($publicationIterator, $filename) {
-		$fp = fopen($filename, 'wt');
-		fputcsv($fp, ['ID', 'Title']);
-		foreach ($publicationIterator as $publication) {
-			fputcsv($fp, [$publication->getId(), $publication->getLocalizedTitle()]);
-		}
-		fclose($fp);
-	}*/
 }
