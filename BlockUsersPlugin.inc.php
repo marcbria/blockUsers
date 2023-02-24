@@ -111,21 +111,11 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	}
 
 
-	/**
-	 * @copydoc ImportExportPlugin::usage()
-	 */
-	public function usage($scriptName) {
-		echo __('plugins.importexport.blockUsers.cliUsage', array(
-			'scriptName' => $scriptName,
-			'pluginName' => $this->getName()
-		)) . "\n";
-	}
-
   	/**
 	 * @copydoc ImportExportPlugin::usage()
 	 */
 	public function usage($scriptName) {
-		echo "Usage: " . $scriptName . " " . $this->getName() . " [filename]\n";
+		echo "Usage: " . $scriptName . " " . $this->getName() . " disable [filename]\n";
 	}
 
 
