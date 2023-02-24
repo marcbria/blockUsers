@@ -47,7 +47,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	/**
 	 * @copydoc ImportExportPlugin::register()
 	 */
-/*	public function display($args, $request) {
+	/*	public function display($args, $request) {
 		parent::display($args, $request);
 
 		// Get the journal or press id
@@ -90,20 +90,17 @@ class BlockUsersPlugin extends ImportExportPlugin {
 
 				$filename = array_shift($args);
 		
-				// Check if the file exists
-				if (!file_exists($filename)) {
-					echo "ERROR: File [./$filename] not found\n";
-					echo "Check if file exist and is readable.\n";
-					return;
-				}
-
-
 				// Check the file parameter
 				if ($filename) {
-					echo "> Filename with users to disable: $filename \n";
 
-					// Get the uploaded file
-      					// file_put_contents($filename, $file['bits']);
+					// Check if the file exists
+					if (!file_exists($filename)) {
+						echo "ERROR: File [./$filename] not found\n";
+						echo "Check if file exist and is readable.\n";
+						return;
+					}
+
+					echo "> Filename with users to disable: $filename \n";
 
 					// Read the file and get the list of emails
 					$emailList = file($filename);
@@ -113,14 +110,15 @@ class BlockUsersPlugin extends ImportExportPlugin {
 						// Get the user with the specified email
 						$userDao = DAORegistry::getDAO('UserDAO');
 
-						// Get the user with the specified email
-						//if (version_compare(VERSION, '3.3.0.0', '<')) {
-						//    $user = $userDao->getByEmail($email);
-						//} else {
+						$user = '';
+						// Funcion name chanAged on 3.3.0 branch:
+						if (function_exists('getByEmail')) {
+						    $user = $userDao->getByEmail($email);
+						} else {
 						    $user = $userDao->getUserByEmail($email);
-						//}
+						}
 
-					        if ($user) {
+						if ($user) {
 							echo "Disabled: $email [ " . $user->getUsername() . " ] \n";
 
 							$user->setDisabled(true);
@@ -136,14 +134,13 @@ class BlockUsersPlugin extends ImportExportPlugin {
 				}
 			break;
 
-                        // Plugin usage
-                        case 'usage':
+			// Plugin usage
+			case 'usage':
 			default:
 
-                                echo "OJS version: $version\n";
-                                $this->usage($scriptName);
-                                break;
-
+				echo "OJS version: $version\n";
+				$this->usage($scriptName);
+				break;
 		}
 	}
 
