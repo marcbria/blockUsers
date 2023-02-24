@@ -98,9 +98,9 @@ class BlockUsersPlugin extends ImportExportPlugin {
 
 		echo "Filename: $filename";
 
-		$data = file_get_contents($filename);
+//		$data = file_get_contents($filename);
 
-		return $data;
+//		return $data;
 	}
 
 
