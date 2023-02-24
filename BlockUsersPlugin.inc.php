@@ -96,8 +96,15 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	public function executeCLI($scriptName, &$args) {
 		$filename = array_shift($args);
 
-		echo "Filename: $filename";
-
+		// Use the path to determine which action should be taken.
+		$path = array_shift($args);
+		switch ($path) {
+			// Stream a CSV file for download
+			case 'usage':
+				$this->usage();
+		}
+		
+//		echo "Filename: $filename";
 //		$data = file_get_contents($filename);
 
 //		return $data;
@@ -117,9 +124,9 @@ class BlockUsersPlugin extends ImportExportPlugin {
   	/**
 	 * @copydoc ImportExportPlugin::usage()
 	 */
-	/*public function usage($scriptName) {
+	public function usage($scriptName) {
 		echo "Usage: " . $scriptName . " " . $this->getName() . " [filename]\n";
-	}*/
+	}
 
 
 
