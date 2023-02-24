@@ -94,20 +94,25 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	 * @copydoc ImportExportPlugin::executeCLI()
 	 */
 	public function executeCLI($scriptName, &$args) {
-		$filename = array_shift($args);
+
+		$this->usage($scriptName);
+		echo "====================="
 
 		// Use the path to determine which action should be taken.
-		$path = array_shift($args);
-		switch ($path) {
+		$action = array_shift($args);
+
+		switch ($action) {
 			// Stream a CSV file for download
 			case 'usage':
-				$this->usage();
-		}
+				$this->usage($scriptName);
+			case 'disable':
+				$filename = array_shift($args);
+				//$this->usage($scriptName);
 		
-//		echo "Filename: $filename";
-//		$data = file_get_contents($filename);
-
-//		return $data;
+				echo "Filename with users to disable: $filename";
+				// $data = file_get_contents($filename);
+				// return $data;
+		}
 	}
 
 
