@@ -100,13 +100,16 @@ class BlockUsersPlugin extends ImportExportPlugin {
 						return;
 					}
 
-					echo "> Filename with users to disable: $filename \n";
+					echo "--------------------------------------------------------------------- \n";
+					echo " Filename with users to disable: $filename \n";
+					echo "--------------------------------------------------------------------- \n\n";
 
 					// Read the file and get the list of emails
 					$emailList = file($filename);
 					foreach ($emailList as $email) {
 						// Remove any leading/trailing whitespaces
 						$email = trim($email);
+
 						// Get the user with the specified email
 						$userDao = DAORegistry::getDAO('UserDAO');
 

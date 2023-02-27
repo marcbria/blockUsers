@@ -25,6 +25,3 @@ msgstr "Title"
 
 msgid "plugins.importexport.blockUsers.uploadFile"
 msgstr "Upload File"
-
-msgid "plugins.importexport.blockUsers.cliUsage"
-msgstr "Usage: {$scriptName} {$pluginName} [csvFileName] [journalId]"
