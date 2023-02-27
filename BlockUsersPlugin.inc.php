@@ -94,7 +94,8 @@ class BlockUsersPlugin extends ImportExportPlugin {
 				// Check the file parameter
 				if ($filename) {
 
-					// Check if the file exists
+					// Funcion name chanAged on 3.3.0 branch:
+					$userDao = DAORegistry::getDAO('UserDAO');
 					if (method_exists($userDao, 'getByEmail')) {
 						echo "ERROR: File [./$filename] not found\n";
 						echo "Check if file exist and is readable.\n";
@@ -111,11 +112,9 @@ class BlockUsersPlugin extends ImportExportPlugin {
 						// Remove any leading/trailing whitespaces
 						$email = trim($email);
 
-						// Get the user with the specified email
-						$userDao = DAORegistry::getDAO('UserDAO');
-
 						$user = '';
-						// Funcion name chanAged on 3.3.0 branch:
+
+						// Get the user with the specified email
 						if (function_exists('getByEmail')) {
 						    $user = $userDao->getByEmail($email);
 						} else {
@@ -144,7 +143,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 
 			case 'sql':
 				echo "Runs the sql query specified in $filename to get the user IDs to be disabled\n";
-				echo "Not implemented yet..."
+				echo "Not implemented yet...";
 				break;
 	
 			// Plugin usage
