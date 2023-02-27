@@ -87,6 +87,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 		switch ($action) {
 
 			case 'disable':
+			case 'enable':
 
 				$filename = array_shift($args);
 		
@@ -101,7 +102,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 					}
 
 					echo "--------------------------------------------------------------------- \n";
-					echo " Filename with users to disable: $filename \n";
+					echo " Filename with users to $action: $filename \n";
 					echo "--------------------------------------------------------------------- \n\n";
 
 					// Read the file and get the list of emails
@@ -122,9 +123,13 @@ class BlockUsersPlugin extends ImportExportPlugin {
 						}
 
 						if ($user) {
-							echo "Disabled: $email [ " . $user->getUsername() . " ] \n";
+							echo "$action: $email [ " . $user->getUsername() . " ] \n";
 
-							$user->setDisabled(true);
+							if ($action == "disable")
+								$user->setDisabled(true);
+							else
+								$user->setDisabled(false);
+
 							$userDao->updateObject($user);
 						}
 						else {
@@ -137,6 +142,11 @@ class BlockUsersPlugin extends ImportExportPlugin {
 				}
 			break;
 
+			case 'sql':
+				echo "Runs the sql query specified in $filename to get the user IDs to be disabled\n";
+				echo "Not implemented yet..."
+				break;
+	
 			// Plugin usage
 			case 'usage':
 			default:
@@ -151,7 +161,8 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	 * @copydoc ImportExportPlugin::usage()
 	 */
 	public function usage($scriptName) {
-		echo "Usage: " . $scriptName . " " . $this->getName() . " disable [filename]\n";
+		echo "Usage: " . $scriptName . " " . $this->getName() . " [action] [filename]\n";
+		echo "	> Actions: disable | enable | usage \n";
 	}
 
 }
