@@ -1,4 +1,4 @@
-Block Users (WORK IN PROGRESS)
+Block Users
 ===========
 
 For OJS/OMP 3.3.0
@@ -21,17 +21,22 @@ Usage
 2. Upload your list of users to be blocked.
 3. Run the script as follows: 
 ```
-$ php tools/importExport.php BlockUsersPlugin path/to/users2block.lst
+$ php tools/importExport.php BlockUsersPlugin [action] [path/to/filename.lst]
 ```
 
-Plugin will compare the list with the users of the existing journal and disable the user if there is a match.
+Possible actions are:
+- usage: how to call the script.
+- disable: block users whose mail is on the file.
+- enable: unblock the users whose mail is on the file.
 
 
 TODO (and ideas)
 ================
 
-- [ ] Show some basic info about the list of mails and ask for confirmation before disable.
-- [ ] Revert the logic to "enable" instead of "disable".
+- [ ] Move from importExport to PKP\cliTool\CommandLineTool
+- [x] Show some basic info about the list of mails.
+- [ ] "Ask for confirmation" mode before disable.
+- [x] Revert the logic to "enable" instead of "disable".
 - [ ] Let it run for specific journals of an installation.
 - [ ] Log the usage of the plugin.
 - [ ] Implement a web frontend.
