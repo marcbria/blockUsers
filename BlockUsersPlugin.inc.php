@@ -94,7 +94,7 @@ class BlockUsersPlugin extends ImportExportPlugin {
 				if ($filename) {
 
 					// Check if the file exists
-					if (!file_exists($filename)) {
+					if (method_exists($userDao, 'getByEmail')) {
 						echo "ERROR: File [./$filename] not found\n";
 						echo "Check if file exist and is readable.\n";
 						return;
@@ -138,7 +138,6 @@ class BlockUsersPlugin extends ImportExportPlugin {
 			case 'usage':
 			default:
 
-				echo "OJS version: $version\n";
 				$this->usage($scriptName);
 				break;
 		}
