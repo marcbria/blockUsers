@@ -131,7 +131,10 @@ class BlockUsersPlugin extends ImportExportPlugin {
 								$user->setDisabled(false);
 							}
 
-							$user->setDisabledReason(plugins.importexport.blockUsers.reason . $action . ' [' . $date . ']');
+							$date = date('Y/m/d h:i:s', time());
+							$reasonTxt=$user->getDisabledReason() . "\n";
+							$reasonTxt.=__('plugins.importexport.blockUsers.reason') . $action . ": $date";
+							$user->setDisabledReason($reasonTxt); // . $action . ' [' . $date . ']');
 							$userDao->updateObject($user);
 						}
 						else {
