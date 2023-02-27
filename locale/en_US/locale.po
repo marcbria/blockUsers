@@ -25,3 +25,6 @@ msgstr "Title"
 
 msgid "plugins.importexport.blockUsers.uploadFile"
 msgstr "Upload File"
+
+msgid "plugins.importexport.blockUsers.reason"
+msgstr "BlockUser: "

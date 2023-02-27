@@ -122,13 +122,16 @@ class BlockUsersPlugin extends ImportExportPlugin {
 						}
 
 						if ($user) {
-							echo "$action: $email [ " . $user->getUsername() . " ] \n";
+							echo "$action". "d: $email [ " . $user->getUsername() . " ] \n";
 
-							if ($action == "disable")
+							if ($action == "disable") {
 								$user->setDisabled(true);
-							else
+							}
+							else {
 								$user->setDisabled(false);
+							}
 
+							$user->setDisabledReason(plugins.importexport.blockUsers.reason . $action . ' [' . $date . ']');
 							$userDao->updateObject($user);
 						}
 						else {
