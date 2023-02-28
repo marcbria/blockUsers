@@ -17,6 +17,18 @@ msgstr "Módulo Block Users"
 msgid "plugins.importexport.blockUsers.description"
 msgstr "Este módulo es una aplicación cliente (debe ejecutarse desde el terminal) para desactivar todos los usuarios cuyo email esté listdo en el fichero especificado."
 
+msgid "plugins.importexport.blockUsers.displayName"
+msgstr "Block Users"
+
+msgid "plugins.importexport.blockUsers.installedTitle"
+msgstr "Módulo Block Users CLI instalado!"
+
+msgid "plugins.importexport.blockUsers.installedBody"
+msgstr "Felicidades! El módulo Block Users se ha instalado correctamente....<br />\n"
+"Pero se trata de un módulo CLI, y eso quiere decir que debe ejecutarse desde línea de comandos del siguente modo:<br />\n"
+"<pre> $ php tools/importExport.php BlockUsersPlugin [action] [path/to/filename.lst]</pre>\n"
+"Si necesitas más intrucciones, por favor visita el <a href=\"https://github.com/marcbria/blockUsers\">repositorio del proyecto</a>.\n"
+
 msgid "plugins.importexport.blockUsers.id"
 msgstr "ID"
 

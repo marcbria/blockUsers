@@ -4,35 +4,22 @@
  * Copyright (c) 2023 Marc Bria (Universitat Autònoma de Barcelona)
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @brief UI to export publications
+ * @brief UI to blockUsers
  *}
-{extends file="layouts/backend.tpl"}
+
+{strip}
+{include file="common/header.tpl" pageTitle="plugins.importexport.blockUsers.displayName"}
+{/strip}
 
 {block name="page"}
 	<h1 class="app__pageHeading">
-		{$pageTitle}
+		{translate key="plugins.importexport.blockUsers.installedTitle"}
 	</h1>
 
-	<div class="app__contentPanel">
-		<table class="pkpTable">
-			<thead>
-				<tr>
-					<th>{translate key="plugins.importexport.blockUsers.id"}</th>
-					<th>{translate key="plugins.importexport.blockUsers.title"}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{foreach $publications as $publication}
-					<tr>
-						<td>{$publication->getId()}</td>
-						<td>{$publication->getLocalizedTitle()}</td>
-					</tr>
-				{/foreach}
-			</tbody>
-		</table>
+	{translate key="plugins.importexport.blockUsers.installedBody"}
 
-		<form method="POST" action="{plugin_url path="uploadFile"}">
+		<!-- form method="POST" action="{plugin_url path="uploadFile"}">
 			<button class="pkp_button" type="submit">{translate key="plugins.importexport.blockUsers.uploadFile"}</button>
-		</form>
+		</form -->
 	</div>
 {/block}

@@ -11,7 +11,6 @@
 
 import('lib.pkp.classes.plugins.ImportExportPlugin');
 
-
 class BlockUsersPlugin extends ImportExportPlugin {
 	/**
 	 * @copydoc ImportExportPlugin::register()
@@ -47,34 +46,18 @@ class BlockUsersPlugin extends ImportExportPlugin {
 	/**
 	 * @copydoc ImportExportPlugin::register()
 	 */
-	/*	public function display($args, $request) {
-		parent::display($args, $request);
-
-		// Get the journal or press id
-		$contextId = Application::get()->getRequest()->getContext()->getId();
-
-		// Use the path to determine which action should be taken.
-		$path = array_shift($args);
-		switch ($path) {
-			// Stream a CSV file for download
-			case 'uploadFile':
-				header('content-type: text/comma-separated-values');
-				header('content-disposition: attachment; filename=articles-' . date('Ymd') . '.csv');
-				$publications = $this->getAll($contextId);
-				$this->export($publications, 'php://output');
-				break;
-
-			// When no path is requested, display a list of publications
-			// to export and a button to run the `uploadFile` path.
+        function display($args, $request) {
+                parent::display($args, $request);
+                switch (array_shift($args)) {
+                        case 'index':
+			case '':
 			default:
-				$templateMgr = TemplateManager::getManager($request);
-				$templateMgr->assign([
-					'pageTitle' => __('plugins.importexport.blockUsers.name'),
-					'publications' => $this->getAll($contextId),
-				]);
-				$templateMgr->display($this->getTemplateResource('uploadFile.tpl'));
-		}
-	}*/
+                                $templateMgr = TemplateManager::getManager($request);
+                                //$templateMgr->display($this->getTemplateResource('index.tpl'));
+                                $templateMgr->display($this->getTemplateResource('uploadFile.tpl'));
+                                break;
+                }
+        }
 
 	/**
 	 * @copydoc ImportExportPlugin::executeCLI()

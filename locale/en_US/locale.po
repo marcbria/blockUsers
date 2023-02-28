@@ -17,11 +17,23 @@ msgstr "Block Users Plugin"
 msgid "plugins.importexport.blockUsers.description"
 msgstr "A plugin to disable all the users whose mail is listed in the file specified."
 
+msgid "plugins.importexport.blockUsers.displayName"
+msgstr "Block Users"
+
 msgid "plugins.importexport.blockUsers.id"
 msgstr "ID"
 
 msgid "plugins.importexport.blockUsers.title"
 msgstr "Title"
+
+msgid "plugins.importexport.blockUsers.installedTitle"
+msgstr "Block Users CLI plugin is installed!"
+
+msgid "plugins.importexport.blockUsers.installedBody"
+msgstr "Congratulations! Block Users is correctly installed....<br />\n"
+"But this is a CLI plugin, so it means it need to be run from the commandline, as follows:<br />\n"
+"<pre> $ php tools/importExport.php BlockUsersPlugin [action] [path/to/filename.lst]</pre>\n"
+"If you need further instructions, please visit the <a href=\"https://github.com/marcbria/blockUsers\">repository of the project</a>.\n"
 
 msgid "plugins.importexport.blockUsers.uploadFile"
 msgstr "Upload File"
