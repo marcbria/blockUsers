@@ -39,4 +39,7 @@ msgid "plugins.importexport.blockUsers.uploadFile"
 msgstr "Subir fichero"
 
 msgid "plugins.importexport.blockUsers.reason"
-msgstr "BlockUser: "
+msgstr " by BlockUser at "
+
+msgid "plugins.importexport.blockUsers.contact"
+msgstr "Contact the Journal Manager for further information."
